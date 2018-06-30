@@ -11,15 +11,9 @@ $.getJSON("/articles", function(data) {
             <div class="card-body">
              <p class="card-text">${article.summary}</p>
             <a href="${article.link}" class="btn btn-primary">Read Article</a>
-            <a id='deleteArticle' data-id=${article._id} class="btn btn-danger">Delete Article</a>
+            <button data-id=${article._id} id='notesBtn'  data-toggle='modal' data-target='#myModal' class="btn btn-info">Article Notes</button>
+            <button id='deleteArticle' data-id=${article._id} class="btn btn-danger">Delete Article</button>
             </br>
-            <form>
-              <div class="form-group">
-              <label><strong>Write a note:</strong></label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </div>
-              <a id='saveNote' data-id=${article._id} class="btn btn-info">Save Note</a>
-            </form>
         </div>`
       )
     }
@@ -32,7 +26,7 @@ $.getJSON("/articles", function(data) {
           <div class="card-body">
             <p class="card-text">${article.summary}</p>
           <a href="${article.link}" class="btn btn-primary">Read Article</a>
-          <a id='saveArticle' data-id=${article._id} class="btn btn-primary">Save Article</a>
+          <button id='saveArticle' data-id=${article._id} class="btn btn-primary">Save Article</button>
       </div>`
     )
     });
@@ -74,4 +68,33 @@ $(document).on('click', ".scrapeBtn", function(){
       document.location.reload();
     }
   });
+});
+
+//Note button funcationality
+$(document).on("click", "#notesBtn", function() {
+  
+  $(".modal-title").empty();
+  $(".input").empty();
+
+  // Save the id from .btn-note
+  var thisId = $(this).attr("data-id");
+  console.log(thisId);
+
+  $.ajax({
+    method: "GET",
+    url: "/articles/" + thisId,
+  })
+    .then(function(data) {
+      console.log('Data: ', data);
+
+      $(".modal-title").append("<h5>" + data.title + "</h5>");
+      $(".input").append("<textarea id='bodyinput' name='body'></textarea>");
+      $(".input").append("<button data-id='" + data._id + "' id='savenote' class='btn btn-primary btn-sm' style='margin-top:20px;'data-dismiss='modal'>Save Note</button>");
+
+      // If there's a note in the article
+      if (data.note) {
+        // Place the body of the note in the body textarea
+        $("#bodyinput").val(data.note.body);
+      }
+    });
 });

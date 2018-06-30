@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mongoscraperdb");
+// mongoose.connect("mongodb://localhost/mongoscraperdb");
+mongoose.connect("mongodb://ryan:ul1ne123@ds141185.mlab.com:41185/heroku_08mzgkrq");
 
 // routes
 app.get("/scrape", function(req, res) {
@@ -61,9 +62,12 @@ app.get("/articles", function(req, res) {
   });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
+// Route for grabbing a specific Article by id
 app.get("/articles/:id", function(req, res) {
-  db.Article.findOne({_id: 'req.params.id'})
+  console.log(req.params.id);
+  db.Article.findOne({
+    _id: req.params.id
+  })
   .populate('note')
   .then(function(dbArticle){
     res.json(dbArticle);
