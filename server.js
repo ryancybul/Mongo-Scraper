@@ -36,7 +36,6 @@ app.get("/scrape", function(req, res) {
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
-          console.log('we here');
           // View the added result in the console
           console.log(dbArticle);
         })
@@ -44,6 +43,7 @@ app.get("/scrape", function(req, res) {
           // If an error occurred, send it to the client
           return res.json(err);
         });
+        return result;
     });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
@@ -92,6 +92,17 @@ app.post("/favorites/:id", function(req, res){
   db.Article.update()
   .then(function(){
     return db.Article.findOneAndUpdate({_id: req.params.id}, {favorite: true});
+  })
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  });
+});
+
+//Put route to update the article favorite boolean
+app.post("/delete/:id", function(req, res){
+  db.Article.update()
+  .then(function(){
+    return db.Article.findOneAndUpdate({_id: req.params.id}, {favorite: false});
   })
   .then(function(dbArticle){
     res.json(dbArticle);
