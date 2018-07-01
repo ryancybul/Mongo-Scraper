@@ -1,8 +1,15 @@
 body {
     background-image: url("./images/stripes-light.png");
 }
+#bodyinput {
+    width: 100%;
+}
 
 .container {
+    width: 100%;
+}
+
+.input {
     width: 100%;
 }
 
@@ -16,6 +23,6 @@ body {
     text-align: center;
 }
 
-.input {
-    width: 100%;
+.modal {
+    text-align: center;
 }
