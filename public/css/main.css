@@ -1,5 +1,5 @@
 body {
-    background-image: url("./images/stripes-light.png");
+    background-image: url("./../images/stripes-light.png");
 }
 #bodyinput {
     width: 100%;
