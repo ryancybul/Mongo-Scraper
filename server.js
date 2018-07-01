@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/mongoscraperdb");
-mongoose.connect("mongodb://ryan:ul1ne123@ds141185.mlab.com:41185/heroku_08mzgkrq");
+mongoose.connect("mongodb://localhost/mongoscraperdb");
+// mongoose.connect("mongodb://ryan:ul1ne123@ds141185.mlab.com:41185/heroku_08mzgkrq");
 
 // routes
 app.get("/scrape", function(req, res) {
